@@ -7,20 +7,23 @@ import {
   setPopularityRange,
   setSortBy,
 } from "../store/productSlice";
+import Product from "./Product";
 
 const ProductList = () => {
   const dispatch = useDispatch();
   const { filteredProducts, status, error } = useSelector(
     (state) => state.products
   );
-console.log("before useffect")
-useEffect(() => {
+  // console.log("before useffect")
+  useEffect(() => {
     if (status === "idle") {
-        dispatch(fetchProducts());
-        console.log("inside useffect")
+      dispatch(fetchProducts());
     }
-}, [status, dispatch]);
-console.log("after useffect")
+  }, [status, dispatch]);
+  useEffect(()=>{
+    console.log(filteredProducts,"filtered products")
+  },[filteredProducts])
+  // console.log("after useffect")
 
   if (status === "loading") return <div>Loading...</div>;
   if (status === "failed") return <div>Error: {error}</div>;
@@ -40,6 +43,7 @@ console.log("after useffect")
         name="price-range"
         onChange={(e) => dispatch(setPriceRange(e.target.value))}
       >
+        {/* {console.log("i m selecting something",)} */}
         <option value="all">All Prices</option>
         <option value="0-5000">0-5000</option>
         <option value="5000-10000">5000-10000</option>
@@ -72,15 +76,10 @@ console.log("after useffect")
       </select>
 
       <div>
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map((product, index) => (
-            <div key={product.id || index}>
-              {console.log(product, "product")}
-              <h3>{product.title}</h3>
-              <p>Price: ₹{product.price}</p>
-              <p>Popularity: {product.popularity}</p>
-            </div>
-          ))
+        {filteredProducts && filteredProducts.length > 0 ? (
+          filteredProducts.map((product,index) => (
+            <Product key={product._id || index}  product={product}/>
+           ))
         ) : (
           <div>No products found</div>
         )}
