@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 
-const Product = ({product }) => {
-    
-    if(!product) return null;
+const Product = ({ product }) => {
+  if (!product) return null;
   return (
-    <div>
-      <h3 style={{ border: "2px solid red", height: "20px" }}>
-      
-        Name:{product.title}
-        {console.log(product.title,"here i am title")}
-      </h3>
-      <p style={{border:"2px solid red",height:"20px"}}>Price: ₹{product.price}</p>
-      <p>Popularity: {product.popularity}</p>
+    <div className="product">
+      <div className="item-container">
+        <h4>Name:</h4>
+        <p>{product.title}</p>
+      </div>
+      <div>
+        <h4>Price:</h4>
+        <p>{product.price}</p>
+      </div>
+      <div>
+        <h4>Popularity:</h4>
+        <p> {product.popularity}</p>
+      </div>
     </div>
   );
 };
